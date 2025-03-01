@@ -1,0 +1,41 @@
+name: Build and Package VSIX
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package Extension
+        run: npm run package
+
+      - name: Get Extension Info
+        id: get-extension-info
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          VSIX_PATH=$(ls *.vsix)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "vsix_path=$VSIX_PATH" >> $GITHUB_OUTPUT
+          echo "vsix_name=$(basename $VSIX_PATH)" >> $GITHUB_OUTPUT
+
+      - name: Upload VSIX as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.get-extension-info.outputs.vsix_name }}
+          path: ${{ steps.get-extension-info.outputs.vsix_path }}

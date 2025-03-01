@@ -1,0 +1,44 @@
+# graphai-visualizer
+
+[![Version](https://img.shields.io/visual-studio-marketplace/v/receptron.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=receptron.graphai-visualizer) [![Installs](https://img.shields.io/visual-studio-marketplace/i/receptron.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=receptron.graphai-visualizer) [![Reactive VSCode](https://img.shields.io/badge/Reactive-VSCode-%23007ACC?style=flat&labelColor=%23229863)](https://kermanx.github.io/reactive-vscode/)
+
+GraphAI Visualizer is a VS Code extension for visualizing JSON and YAML graphs defined with [GraphAI](https://github.com/receptron/graphai). Built using [Reactive VS Code](https://kermanx.github.io/reactive-vscode/).
+
+<img src="https://github.com/user-attachments/assets/d83aae3f-786e-4f3d-bd29-f3687d23b7a8" width="700">
+
+## Features
+
+- Automatically parses GraphAI JSON and YAML files
+- Visualizes graphs using Mermaid
+- Intuitive zoom, pan, and reset functionality
+- Auto-updates when files are saved
+- Supports both dark and light modes
+
+## Usage
+
+1. Open a JSON or YAML file
+2. Open the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and search for "Show Graph: GraphAI Visualizer"
+3. The graph will appear in a separate window
+4. Drag within the graph to pan, use buttons to zoom in/out or reset
+5. Edit and save your file to automatically update the graph
+
+## Directory Structure
+
+* `package.json` - the manifest file in which you declare your extension and command
+* `src/extension.ts` - the main file for the extension
+* `src/lib/codeToMermaid.ts` - logic to convert GraphAI JSON or YAML to Mermaid format
+
+## Get started
+
+* Open this repository in VS Code
+* Run `pnpm install` to install the dependencies
+* Run `pnpm dev` to compile the extension and watch for changes
+* Press `F5` to open a new window with your extension loaded
+* Run your command from the command palette
+* Set breakpoints in your code inside `src/extension.ts` to debug your extension
+* Find output from your extension in the debug console
+
+## Make changes
+
+* You can relaunch the extension from the debug toolbar after changing code in `src/extension.ts`
+* You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window with your extension to load your changes
