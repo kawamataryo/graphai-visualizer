@@ -1,0 +1,48 @@
+{
+  "publisher": "receptron",
+  "name": "graphai-visualizer",
+  "displayName": "graphai-visualizer",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.cjs",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "graphai-visualizer.showGraph",
+        "title": "Show Graph: GraphAI Visualizer"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsup --env.NODE_ENV production --treeshake",
+    "dev": "tsup --watch ./src --env.NODE_ENV development",
+    "typecheck": "tsc --noEmit",
+    "vscode:prepublish": "pnpm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "@types/vscode": "^1.89.0",
+    "@vscode/vsce": "^3.2.2",
+    "reactive-vscode": "^0.2.13",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vitest": "^3.0.7"
+  },
+  "dependencies": {
+    "graphai": "^0.6.26",
+    "yaml": "^2.7.0"
+  }
+}

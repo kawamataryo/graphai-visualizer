@@ -1,0 +1,65 @@
+name: Build and Release VSIX
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Package Extension
+        run: pnpm package
+
+      - name: Get Extension Info
+        id: get-extension-info
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          VSIX_PATH=$(ls *.vsix)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "vsix_path=$VSIX_PATH" >> $GITHUB_OUTPUT
+          echo "vsix_name=$(basename $VSIX_PATH)" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          name: Release ${{ steps.get-extension-info.outputs.version }}
+          draft: false
+          prerelease: false
+          files: ${{ steps.get-extension-info.outputs.vsix_path }}
