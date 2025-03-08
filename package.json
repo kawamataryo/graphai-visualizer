@@ -2,7 +2,7 @@
   "publisher": "kawamataryo",
   "name": "graphai-visualizer",
   "displayName": "GraphAI Visualizer",
-  "icon": "resources/icon.jpg",
+  "icon": "resources/icon.png",
   "type": "module",
   "version": "0.0.2",
   "repository": {
