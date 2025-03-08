@@ -35,6 +35,9 @@ export const codeToMermaid = (code: string, fileLanguageId: string) => {
   const graphData = fileLanguageId === 'yaml' ? YAML.parse(code) as GraphData : JSON.parse(code) as GraphData;
   const lines: string[] = ["flowchart TD"];
 
+  const staticNodes: string[] = [];
+  const dynamicNodes: string[] = [];
+
   Object.keys(graphData.nodes).forEach((nodeId) => {
     const node = graphData.nodes[nodeId];
     if ("agent" in node) {
@@ -42,11 +45,24 @@ export const codeToMermaid = (code: string, fileLanguageId: string) => {
       if (node.inputs) {
         addConnectionsToGraph({ lines, nodeId, inputs: node.inputs, graphData });
       }
-    }
-    if ("update" in node) {
-      addConnectionsToGraph({ lines, nodeId, inputs: { update: node.update }, graphData });
+      dynamicNodes.push(nodeId);
+    } else {
+      lines.push(` ${nodeId}(${nodeId})`);
+      staticNodes.push(nodeId);
+
+      if ("update" in node) {
+        addConnectionsToGraph({ lines, nodeId, inputs: { update: node.update }, graphData });
+      }
     }
   });
+
+  if (staticNodes.length > 0) {
+    lines.push(`class ${staticNodes.join(',')} staticNode`);
+  }
+
+  if (dynamicNodes.length > 0) {
+    lines.push(`class ${dynamicNodes.join(',')} computedNode`);
+  }
 
   return lines.join("\n");
 };

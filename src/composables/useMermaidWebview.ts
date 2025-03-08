@@ -33,6 +33,24 @@ export const useMermaidWebview = (fileName: string) => {
         overflow: hidden;
       }
 
+      /* Static Node and Computed Node Styles */
+      .staticNode rect {
+        fill: ${isDarkTheme.value ? '#6272a4' : '#4682b4'} !important;
+        stroke: ${isDarkTheme.value ? '#4682b4' : '#0077cc'} !important;
+      }
+      .staticNode .nodeLabel {
+        color: ${isDarkTheme.value ? '#f8f8f2' : '#333333'} !important;
+        fill: ${isDarkTheme.value ? '#f8f8f2' : '#333333'} !important;
+      }
+      .computedNode rect {
+        fill: ${isDarkTheme.value ? '#44475a' : '#e6e6fa'} !important;
+        stroke: ${isDarkTheme.value ? '#4682b4' : '#0077cc'} !important;
+      }
+      .computedNode .nodeLabel {
+        color: ${isDarkTheme.value ? '#f8f8f2' : '#333333'} !important;
+        fill: ${isDarkTheme.value ? '#f8f8f2' : '#333333'} !important;
+      }
+
       /* Control panel styles */
       .control-panel {
         position: fixed;
@@ -152,7 +170,7 @@ export const useMermaidWebview = (fileName: string) => {
           fontSize: '14px',
           edgeLabel: {
             fontSize: '11px',
-            color: '${isDarkTheme.value ? '#e0e0e0' : '#333333'}',
+            color: '${isDarkTheme.value ? '#e0e0e0' : '#333333'}'
           }
         }
       });
