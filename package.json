@@ -36,7 +36,8 @@
     "vscode:prepublish": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "package": "vsce package"
+    "package": "vsce package",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/node": "18.x",
