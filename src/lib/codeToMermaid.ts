@@ -15,13 +15,10 @@ const addConnectionsToGraph = ({
   if (graphData) {
     inputs2dataSources(inputs).map((source) => {
       if (source.nodeId) {
-        const sourceNode = graphData.nodes[source.nodeId];
-        const sourceAgentName = sourceNode && "agent" in sourceNode ? `<br/><span class="agent-name">${sourceNode.agent}</span>` : '';
-
         if (source.propIds) {
-          lines.push(` ${source.nodeId}(${source.nodeId}${sourceAgentName}) -- ${source.propIds.join(".")} --> ${nodeId}`);
+          lines.push(` ${source.nodeId} -- ${source.propIds.join(".")} --> ${nodeId}`);
         } else {
-          lines.push(` ${source.nodeId}(${source.nodeId}${sourceAgentName}) --> ${nodeId}`);
+          lines.push(` ${source.nodeId} --> ${nodeId}`);
         }
       }
     });

@@ -18,7 +18,7 @@ nodes:
 flowchart TD
  input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
- input(input) --> output
+ input --> output
 class input staticNode
 class output computedNode
 `.trim()
@@ -61,18 +61,18 @@ nodes:
       expected: `
 flowchart TD
  fruits(fruits)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
+ shift -- array --> fruits
  result(result)
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
+ reducer --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits(fruits) --> shift
+ fruits --> shift
  prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- item --> prompt
+ shift -- item --> prompt
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>) --> llm
+ prompt --> llm
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result(result) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+ result --> reducer
+ llm -- choices.$0.message.content --> reducer
 class fruits,result staticNode
 class shift,prompt,llm,reducer computedNode
 `.trim()
@@ -139,24 +139,24 @@ nodes:
       expected: `
 flowchart TD
  continue(continue)
- checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>) -- continue --> continue
+ checkInput -- continue --> continue
  messages(messages)
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> messages
+ reducer --> messages
  userInput(userInput<br/><span class="agent-name">textInputAgent</span>)
  checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput(userInput<br/><span class="agent-name">textInputAgent</span>) --> checkInput
+ userInput --> checkInput
  userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput(userInput<br/><span class="agent-name">textInputAgent</span>) --> userMessage
+ userInput --> userMessage
  appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>)
- messages(messages) --> appendedMessages
- userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>) --> appendedMessages
+ messages --> appendedMessages
+ userMessage --> appendedMessages
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>) --> llm
+ appendedMessages --> llm
  output(output<br/><span class="agent-name">stringTemplateAgent</span>)
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> output
+ llm -- choices.$0.message.content --> output
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message --> reducer
+ appendedMessages --> reducer
+ llm -- choices.$0.message --> reducer
 class continue,messages staticNode
 class userInput,checkInput,userMessage,appendedMessages,llm,output,reducer computedNode
 `.trim()
@@ -192,7 +192,7 @@ describe('codeToMermaid -- json', () => {
 flowchart TD
  input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
- input(input) --> output
+ input --> output
 class input staticNode
 class output computedNode
 `.trim()
@@ -248,18 +248,18 @@ class output computedNode
       expected: `
 flowchart TD
  fruits(fruits)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
+ shift -- array --> fruits
  result(result)
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
+ reducer --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits(fruits) --> shift
+ fruits --> shift
  prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- item --> prompt
+ shift -- item --> prompt
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>) --> llm
+ prompt --> llm
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result(result) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+ result --> reducer
+ llm -- choices.$0.message.content --> reducer
 class fruits,result staticNode
 class shift,prompt,llm,reducer computedNode
 `.trim()
