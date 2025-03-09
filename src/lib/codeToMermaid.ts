@@ -25,16 +25,18 @@ const addConnectionsToGraph = ({
   }
 };
 
-export const codeToMermaid = (code: string, fileLanguageId: string) => {
-  if (fileLanguageId !== 'yaml' && fileLanguageId !== 'json') {
-    return ''
+const processGraph = (
+  { graphData, 
+    lines, 
+    staticNodes, 
+    dynamicNodes,
+  }: { 
+    graphData: GraphData, 
+    lines: string[], 
+    staticNodes: string[], 
+    dynamicNodes: string[] 
   }
-  const graphData = fileLanguageId === 'yaml' ? YAML.parse(code) as GraphData : JSON.parse(code) as GraphData;
-  const lines: string[] = ["flowchart TD"];
-
-  const staticNodes: string[] = [];
-  const dynamicNodes: string[] = [];
-
+  ) => {
   Object.keys(graphData.nodes).forEach((nodeId) => {
     const node = graphData.nodes[nodeId];
     if ("agent" in node) {
@@ -46,12 +48,25 @@ export const codeToMermaid = (code: string, fileLanguageId: string) => {
     } else {
       lines.push(` ${nodeId}(${nodeId})`);
       staticNodes.push(nodeId);
-
+  
       if ("update" in node) {
         addConnectionsToGraph({ lines, nodeId, inputs: { update: node.update }, graphData });
       }
     }
   });
+};
+
+export const codeToMermaid = (code: string, fileLanguageId: string) => {
+  if (fileLanguageId !== 'yaml' && fileLanguageId !== 'json') {
+    return ''
+  }
+  const graphData = fileLanguageId === 'yaml' ? YAML.parse(code) as GraphData : JSON.parse(code) as GraphData;
+  const lines: string[] = ["flowchart TD"];
+
+  const staticNodes: string[] = [];
+  const dynamicNodes: string[] = [];
+
+  processGraph({ graphData, lines, staticNodes, dynamicNodes });
 
   if (staticNodes.length > 0) {
     lines.push(`class ${staticNodes.join(',')} staticNode`);
