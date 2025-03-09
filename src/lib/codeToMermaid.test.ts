@@ -16,8 +16,11 @@ nodes:
 `,
       expected: `
 flowchart TD
+ input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
  input(input) --> output
+class input staticNode
+class output computedNode
 `.trim()
     },
     {
@@ -57,7 +60,9 @@ nodes:
 `,
       expected: `
 flowchart TD
+ fruits(fruits)
  shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
+ result(result)
  reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
  fruits(fruits) --> shift
@@ -68,6 +73,8 @@ flowchart TD
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
  result(result) --> reducer
  llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+class fruits,result staticNode
+class shift,prompt,llm,reducer computedNode
 `.trim()
     },
     {
@@ -131,7 +138,9 @@ nodes:
 `,
       expected: `
 flowchart TD
+ continue(continue)
  checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>) -- continue --> continue
+ messages(messages)
  reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> messages
  userInput(userInput<br/><span class="agent-name">textInputAgent</span>)
  checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>)
@@ -148,6 +157,8 @@ flowchart TD
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
  appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>) --> reducer
  llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message --> reducer
+class continue,messages staticNode
+class userInput,checkInput,userMessage,appendedMessages,llm,output,reducer computedNode
 `.trim()
     }
   ];
@@ -179,8 +190,11 @@ describe('codeToMermaid -- json', () => {
 }`,
       expected: `
 flowchart TD
+ input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
  input(input) --> output
+class input staticNode
+class output computedNode
 `.trim()
     },
     {
@@ -233,7 +247,9 @@ flowchart TD
 }`,
       expected: `
 flowchart TD
+ fruits(fruits)
  shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
+ result(result)
  reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
  fruits(fruits) --> shift
@@ -244,6 +260,8 @@ flowchart TD
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
  result(result) --> reducer
  llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+class fruits,result staticNode
+class shift,prompt,llm,reducer computedNode
 `.trim()
     }
   ];
