@@ -16,8 +16,11 @@ nodes:
 `,
       expected: `
 flowchart TD
+ input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
- input(input) --> output
+ input --> output
+class input staticNode
+class output computedNode
 `.trim()
     },
     {
@@ -57,17 +60,21 @@ nodes:
 `,
       expected: `
 flowchart TD
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
+ fruits(fruits)
+ shift -- array --> fruits
+ result(result)
+ reducer --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits(fruits) --> shift
+ fruits --> shift
  prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- item --> prompt
+ shift -- item --> prompt
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>) --> llm
+ prompt --> llm
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result(result) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+ result --> reducer
+ llm -- choices.$0.message.content --> reducer
+class fruits,result staticNode
+class shift,prompt,llm,reducer computedNode
 `.trim()
     },
     {
@@ -131,23 +138,27 @@ nodes:
 `,
       expected: `
 flowchart TD
- checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>) -- continue --> continue
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> messages
+ continue(continue)
+ checkInput -- continue --> continue
+ messages(messages)
+ reducer --> messages
  userInput(userInput<br/><span class="agent-name">textInputAgent</span>)
  checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput(userInput<br/><span class="agent-name">textInputAgent</span>) --> checkInput
+ userInput --> checkInput
  userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput(userInput<br/><span class="agent-name">textInputAgent</span>) --> userMessage
+ userInput --> userMessage
  appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>)
- messages(messages) --> appendedMessages
- userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>) --> appendedMessages
+ messages --> appendedMessages
+ userMessage --> appendedMessages
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>) --> llm
+ appendedMessages --> llm
  output(output<br/><span class="agent-name">stringTemplateAgent</span>)
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> output
+ llm -- choices.$0.message.content --> output
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message --> reducer
+ appendedMessages --> reducer
+ llm -- choices.$0.message --> reducer
+class continue,messages staticNode
+class userInput,checkInput,userMessage,appendedMessages,llm,output,reducer computedNode
 `.trim()
     }
   ];
@@ -179,8 +190,11 @@ describe('codeToMermaid -- json', () => {
 }`,
       expected: `
 flowchart TD
+ input(input)
  output(output<br/><span class="agent-name">echoAgent</span>)
- input(input) --> output
+ input --> output
+class input staticNode
+class output computedNode
 `.trim()
     },
     {
@@ -233,17 +247,21 @@ flowchart TD
 }`,
       expected: `
 flowchart TD
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- array --> fruits
- reducer(reducer<br/><span class="agent-name">pushAgent</span>) --> result
+ fruits(fruits)
+ shift -- array --> fruits
+ result(result)
+ reducer --> result
  shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits(fruits) --> shift
+ fruits --> shift
  prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift(shift<br/><span class="agent-name">shiftAgent</span>) -- item --> prompt
+ shift -- item --> prompt
  llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>) --> llm
+ prompt --> llm
  reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result(result) --> reducer
- llm(llm<br/><span class="agent-name">openAIAgent</span>) -- choices.$0.message.content --> reducer
+ result --> reducer
+ llm -- choices.$0.message.content --> reducer
+class fruits,result staticNode
+class shift,prompt,llm,reducer computedNode
 `.trim()
     }
   ];
@@ -255,3 +273,187 @@ flowchart TD
     });
   });
 });
+
+describe(`codeToMermaid -- yaml, nested nodes`, () => {
+  const testCases = [
+    {
+      name: 'should convert simple nested nodes with iterative inputs',
+      yaml: `
+version: 0.5
+nodes:
+  fruits:
+    value: [apple, lemomn, banana]
+  map:
+    agent: mapAgent
+    inputs:
+      rows: :fruits
+    isResult: true
+    graph:
+      nodes:
+        llm:
+          agent: openAIAgent
+          params:
+            model: gpt-4o
+          inputs:
+            prompt: What is the typical color of \${:row}? Just answer the color.
+        result:
+          agent: copyAgent
+          params:
+            namedKey: item
+          inputs:
+            item: :llm.text
+          isResult: true
+`,
+      expected: `
+flowchart TD
+ fruits(fruits)
+ fruits --> map
+ subgraph map[map: <span class="agent-name">mapAgent</span>]
+  map.llm(llm<br/><span class="agent-name">openAIAgent</span>)
+  map.row --> map.llm
+  map.result(result<br/><span class="agent-name">copyAgent</span>)
+  map.llm -- text --> map.result
+ end
+class fruits staticNode
+class map.llm,map.result computedNode
+class map nestedGraph
+`.trim(),
+    },
+    {
+      name: 'should convert nested node with template input',
+      yaml: `
+version: 0.5
+nodes:
+  source1:
+    value:
+      fruit: apple
+  source2:
+    value:
+      fruit: orange
+  source3:
+    value:
+      fruit: banana
+  source4:
+    value:
+      fruit: lemon
+  nestedNode:
+    agent: mapAgent
+    inputs:
+      rows:
+        - :source1.fruit
+        - :source2.fruit
+        - :source3.fruit
+        - :source4.fruit
+    graph:
+      version: 0.5
+      nodes:
+        node2:
+          agent: stringTemplateAgent
+          params:
+            template: "I love \${row}."
+          inputs: row :row
+          isResult: true
+  result:
+    agent: sleeperAgent
+    inputs:
+      array: [:nestedNode]
+    isResult: true
+`,
+      expected: `
+flowchart TD
+ source1(source1)
+ source2(source2)
+ source3(source3)
+ source4(source4)
+ source1 -- fruit --> nestedNode
+ source2 -- fruit --> nestedNode
+ source3 -- fruit --> nestedNode
+ source4 -- fruit --> nestedNode
+ subgraph nestedNode[nestedNode: <span class="agent-name">mapAgent</span>]
+  nestedNode.node2(node2<br/><span class="agent-name">stringTemplateAgent</span>)
+ end
+ result(result<br/><span class="agent-name">sleeperAgent</span>)
+ nestedNode --> result
+class source1,source2,source3,source4 staticNode
+class nestedNode.node2,result computedNode
+class nestedNode nestedGraph
+`.trim(),
+    },
+    {
+      name: 'should convert dynamic nested node',
+      yaml: `
+version: 0.5
+nodes:
+  document:
+    agent: fetchAgent
+    console:
+      before: ...fetching document
+    params:
+      type: text
+    inputs:
+      url: https://raw.githubusercontent.com/receptron/graphai/main/packages/graphai/README.md
+  sampleGraph:
+    agent: fetchAgent
+    console:
+      before: ...fetching sample graph
+    params:
+      type: text
+    inputs:
+      url: https://raw.githubusercontent.com/receptron/graphai/refs/heads/main/packages/samples/graph_data/openai/reception.yaml
+  graphGenerator:
+    agent: openAIAgent
+    console:
+      before: ...generating a new graph
+    params:
+      model: gpt-4o
+    inputs:
+      prompt: Name, Address and Phone Number
+      messages:
+        - role: system
+          content: >-
+            You an expert in GraphAI programming. You are responsible in
+            generating a graphAI graph to get required information from the
+            user.
+
+            graphAI graph outputs in json format
+
+            [documation of GraphAI]
+
+            \${:document}
+        - role: user
+          content: Name, Date of Birth and Gendar
+        - role: assistant
+          content: |
+            \`\`\`json
+            \${:sampleGraph}
+            \`\`\`
+  executer:
+    agent: nestedAgent
+    graph: :graphGenerator.text.codeBlock().jsonParse()
+    isResult: true
+`,
+      expected: `
+flowchart TD
+ document(document<br/><span class="agent-name">fetchAgent</span>)
+ sampleGraph(sampleGraph<br/><span class="agent-name">fetchAgent</span>)
+ graphGenerator(graphGenerator<br/><span class="agent-name">openAIAgent</span>)
+ document --> graphGenerator
+ sampleGraph --> graphGenerator
+ graphGenerator -- text.codeBlock().jsonParse() --> executer
+ subgraph executer[executer: <span class="agent-name">nestedAgent</span>]
+ end
+class document,sampleGraph,graphGenerator computedNode
+class executer nestedGraph    
+`.trim()
+    }
+  ];
+
+  testCases.forEach(({ name, yaml, expected }) => {
+    it(name, () => {
+      const result = codeToMermaid(yaml, 'yaml'); 
+      expect(result).toBe(expected);
+    });
+  });
+});
+
+
