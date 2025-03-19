@@ -46,6 +46,7 @@
     "@types/node": "18.x",
     "@types/vscode": "^1.89.0",
     "@vscode/vsce": "^3.2.2",
+    "lefthook": "^1.11.3",
     "reactive-vscode": "^0.2.13",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
