@@ -277,7 +277,7 @@ export function convertToJsonSafeObject(
 export function parseObjectWithReferences(
   sourceCode: string,
   position: vscode.Position,
-): null | string {
+) {
   const sourceFile = ts.createSourceFile(
     "temp.ts",
     sourceCode,
