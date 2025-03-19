@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import type * as vscode from "vscode";
 import { parseObjectWithReferences } from "../lib/objectParser";
 import { logger } from "../utils";
 
