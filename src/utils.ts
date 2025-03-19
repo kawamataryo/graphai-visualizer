@@ -1,3 +1,3 @@
-import { defineLogger } from 'reactive-vscode'
+import { defineLogger } from "reactive-vscode";
 
-export const logger = defineLogger('graphai-visualizer')
+export const logger = defineLogger("graphai-visualizer");

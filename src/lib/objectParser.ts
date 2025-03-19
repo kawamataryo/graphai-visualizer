@@ -1,21 +1,28 @@
-import * as ts from 'typescript';
-import * as vscode from 'vscode';
+import * as ts from "typescript";
+import type * as vscode from "vscode";
 
 /**
  * Searches for the object literal that includes the cursor position in the source file
  */
-export function findObjectAtPosition(sourceCode: string, position: vscode.Position): ts.ObjectLiteralExpression | null {
+export function findObjectAtPosition(
+  sourceCode: string,
+  position: vscode.Position,
+): ts.ObjectLiteralExpression | null {
   const sourceFile = ts.createSourceFile(
-    'temp.ts',
+    "temp.ts",
     sourceCode,
     ts.ScriptTarget.Latest,
-    true
+    true,
   );
 
   let targetNode: ts.ObjectLiteralExpression | null = null;
 
   // Convert cursor position to offset
-  const offset = ts.getPositionOfLineAndCharacter(sourceFile, position.line, position.character);
+  const offset = ts.getPositionOfLineAndCharacter(
+    sourceFile,
+    position.line,
+    position.character,
+  );
 
   function findNode(node: ts.Node): void {
     if (targetNode) return;
@@ -38,47 +45,58 @@ export function findObjectAtPosition(sourceCode: string, position: vscode.Positi
 /**
  * Finds variable definition and retrieves its value
  */
-function findVariableDefinition(sourceFile: ts.SourceFile, variableName: string): ts.Node | null {
+function findVariableDefinition(
+  sourceFile: ts.SourceFile,
+  variableName: string,
+): ts.Node | null {
   let result: ts.Node | null = null;
 
   function findVariable(node: ts.Node) {
     if (result) return;
 
     // Search for variable declarations
-    if (ts.isVariableDeclaration(node) &&
-        ts.isIdentifier(node.name) &&
-        node.name.text === variableName &&
-        node.initializer) {
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.name.text === variableName &&
+      node.initializer
+    ) {
       result = node.initializer;
       return;
     }
 
     // Search for other declarations (e.g., export const)
     if (ts.isVariableStatement(node)) {
-      node.declarationList.declarations.forEach(declaration => {
-        if (ts.isIdentifier(declaration.name) &&
-            declaration.name.text === variableName &&
-            declaration.initializer) {
+      for (const declaration of node.declarationList.declarations) {
+        if (
+          ts.isIdentifier(declaration.name) &&
+          declaration.name.text === variableName &&
+          declaration.initializer
+        ) {
           result = declaration.initializer;
         }
-      });
+      }
     }
 
     // Search for properties in objects
     if (ts.isObjectLiteralExpression(node)) {
-      node.properties.forEach(prop => {
-        if (ts.isPropertyAssignment(prop) &&
-            ts.isIdentifier(prop.name) &&
-            prop.name.text === variableName) {
+      for (const prop of node.properties) {
+        if (
+          ts.isPropertyAssignment(prop) &&
+          ts.isIdentifier(prop.name) &&
+          prop.name.text === variableName
+        ) {
           result = prop.initializer;
         }
-      });
+      }
     }
 
     // Search for module exports
-    if (ts.isExportAssignment(node) &&
-        ts.isIdentifier(node.expression) &&
-        node.expression.text === variableName) {
+    if (
+      ts.isExportAssignment(node) &&
+      ts.isIdentifier(node.expression) &&
+      node.expression.text === variableName
+    ) {
       result = node.expression;
     }
 
@@ -93,11 +111,14 @@ function findVariableDefinition(sourceFile: ts.SourceFile, variableName: string)
  * Converts TypeScript AST nodes to a JSON-safe object
  * For variable references, it searches for the definition and retrieves its content
  */
-export function convertToJsonSafeObject(node: ts.Node, sourceFile?: ts.SourceFile): any {
+export function convertToJsonSafeObject(
+  node: ts.Node,
+  sourceFile?: ts.SourceFile,
+): any {
   // For object literals
   if (ts.isObjectLiteralExpression(node)) {
     const result: Record<string, any> = {};
-    node.properties.forEach(prop => {
+    for (const prop of node.properties) {
       if (ts.isPropertyAssignment(prop)) {
         const nameNode = prop.name;
         let propName: string;
@@ -113,26 +134,44 @@ export function convertToJsonSafeObject(node: ts.Node, sourceFile?: ts.SourceFil
         // If the initializer is a variable reference, find its definition
         if (ts.isIdentifier(prop.initializer) && sourceFile) {
           const variableName = prop.initializer.text;
-          const variableDefinition = findVariableDefinition(sourceFile, variableName);
+          const variableDefinition = findVariableDefinition(
+            sourceFile,
+            variableName,
+          );
 
           if (variableDefinition) {
-            result[propName] = convertToJsonSafeObject(variableDefinition, sourceFile);
+            result[propName] = convertToJsonSafeObject(
+              variableDefinition,
+              sourceFile,
+            );
           } else {
             result[propName] = `<expr>${variableName}</expr>`;
           }
-        } else if (ts.isFunctionExpression(prop.initializer) || ts.isArrowFunction(prop.initializer)) {
+        } else if (
+          ts.isFunctionExpression(prop.initializer) ||
+          ts.isArrowFunction(prop.initializer)
+        ) {
           result[propName] = "<expr>AnonymousFunctionAgent</expr>";
         } else {
-          result[propName] = convertToJsonSafeObject(prop.initializer, sourceFile);
+          result[propName] = convertToJsonSafeObject(
+            prop.initializer,
+            sourceFile,
+          );
         }
       } else if (ts.isShorthandPropertyAssignment(prop)) {
         const propName = prop.name.text;
 
         // For shorthand properties, also find their definitions
         if (sourceFile) {
-          const variableDefinition = findVariableDefinition(sourceFile, propName);
+          const variableDefinition = findVariableDefinition(
+            sourceFile,
+            propName,
+          );
           if (variableDefinition) {
-            result[propName] = convertToJsonSafeObject(variableDefinition, sourceFile);
+            result[propName] = convertToJsonSafeObject(
+              variableDefinition,
+              sourceFile,
+            );
           } else {
             result[propName] = `<expr>${propName}</expr>`;
           }
@@ -145,30 +184,44 @@ export function convertToJsonSafeObject(node: ts.Node, sourceFile?: ts.SourceFil
         // For spread operators, find the referenced object and expand its properties
         if (ts.isIdentifier(spreadExpr) && sourceFile) {
           const variableName = spreadExpr.text;
-          const variableDefinition = findVariableDefinition(sourceFile, variableName);
+          const variableDefinition = findVariableDefinition(
+            sourceFile,
+            variableName,
+          );
 
-          if (variableDefinition && ts.isObjectLiteralExpression(variableDefinition)) {
+          if (
+            variableDefinition &&
+            ts.isObjectLiteralExpression(variableDefinition)
+          ) {
             // Expand the properties of the spread object
-            const spreadObj = convertToJsonSafeObject(variableDefinition, sourceFile);
+            const spreadObj = convertToJsonSafeObject(
+              variableDefinition,
+              sourceFile,
+            );
             Object.assign(result, spreadObj);
           } else {
-            result[`...${spreadExpr.getText()}`] = `<expr>${spreadExpr.getText()}</expr>`;
+            result[`...${spreadExpr.getText()}`] =
+              `<expr>${spreadExpr.getText()}</expr>`;
           }
         } else {
-          result[`...${spreadExpr.getText()}`] = `<expr>${spreadExpr.getText()}</expr>`;
+          result[`...${spreadExpr.getText()}`] =
+            `<expr>${spreadExpr.getText()}</expr>`;
         }
       }
-    });
+    }
     return result;
   }
 
   // For array literals
   if (ts.isArrayLiteralExpression(node)) {
-    return node.elements.map(element => {
+    return node.elements.map((element) => {
       // If array element is a variable reference
       if (ts.isIdentifier(element) && sourceFile) {
         const variableName = element.text;
-        const variableDefinition = findVariableDefinition(sourceFile, variableName);
+        const variableDefinition = findVariableDefinition(
+          sourceFile,
+          variableName,
+        );
 
         if (variableDefinition) {
           return convertToJsonSafeObject(variableDefinition, sourceFile);
@@ -221,12 +274,15 @@ export function convertToJsonSafeObject(node: ts.Node, sourceFile?: ts.SourceFil
 /**
  * Parses an object from the entire file with all references resolved
  */
-export function parseObjectWithReferences(sourceCode: string, position: vscode.Position): any {
+export function parseObjectWithReferences(
+  sourceCode: string,
+  position: vscode.Position,
+): null | string {
   const sourceFile = ts.createSourceFile(
-    'temp.ts',
+    "temp.ts",
     sourceCode,
     ts.ScriptTarget.Latest,
-    true
+    true,
   );
 
   const objectNode = findObjectAtPosition(sourceCode, position);

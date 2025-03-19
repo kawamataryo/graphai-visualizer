@@ -37,9 +37,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "package": "vsce package",
-    "publish": "vsce publish"
+    "publish": "vsce publish",
+    "check": "biome check --write ./src",
+    "check:unsafe": "biome check --unsafe ./src"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "18.x",
     "@types/vscode": "^1.89.0",
     "@vscode/vsce": "^3.2.2",

@@ -1,12 +1,18 @@
-import { computed, ref, useWebviewPanel, useIsDarkTheme } from 'reactive-vscode'
-import { ViewColumn } from 'vscode'
-import { codeToMermaid } from '../lib/codeToMermaid'
+import {
+  computed,
+  ref,
+  useIsDarkTheme,
+  useWebviewPanel,
+} from "reactive-vscode";
+import { ViewColumn } from "vscode";
+import { codeToMermaid } from "../lib/codeToMermaid";
 
 export const useMermaidWebview = (fileName: string) => {
-  const mermaidGraph = ref('')
-  const isDarkTheme = useIsDarkTheme()
+  const mermaidGraph = ref("");
+  const isDarkTheme = useIsDarkTheme();
 
-  const html = computed(() => `
+  const html = computed(
+    () => `
   <html>
   <head>
     <style>
@@ -14,16 +20,16 @@ export const useMermaidWebview = (fileName: string) => {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         margin: 0;
         padding: 20px;
-        background-color: ${isDarkTheme.value ? '#1e1e1e' : '#f5f5f5'};
-        color: ${isDarkTheme.value ? '#e0e0e0' : '#333333'};
+        background-color: ${isDarkTheme.value ? "#1e1e1e" : "#f5f5f5"};
+        color: ${isDarkTheme.value ? "#e0e0e0" : "#333333"};
       }
       .container {
         max-width: 100%;
         margin: 0 auto;
-        background-color: ${isDarkTheme.value ? '#252526' : '#ffffff'};
+        background-color: ${isDarkTheme.value ? "#252526" : "#ffffff"};
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, ${isDarkTheme.value ? '0.5' : '0.1'});
+        box-shadow: 0 2px 8px rgba(0, 0, 0, ${isDarkTheme.value ? "0.5" : "0.1"});
         position: relative;
       }
       .mermaid {
@@ -35,20 +41,20 @@ export const useMermaidWebview = (fileName: string) => {
 
       /* Static Node and Computed Node Styles */
       .staticNode rect {
-        fill: ${isDarkTheme.value ? '#1e272e' : '#e0e0e0'} !important;
-        stroke: ${isDarkTheme.value ? '#e0e0e0' : '#222222'} !important;
+        fill: ${isDarkTheme.value ? "#1e272e" : "#e0e0e0"} !important;
+        stroke: ${isDarkTheme.value ? "#e0e0e0" : "#222222"} !important;
       }
       .staticNode .nodeLabel {
-        color: ${isDarkTheme.value ? '#ecf0f1' : '#333333'} !important;
-        fill: ${isDarkTheme.value ? '#ecf0f1' : '#333333'} !important;
+        color: ${isDarkTheme.value ? "#ecf0f1" : "#333333"} !important;
+        fill: ${isDarkTheme.value ? "#ecf0f1" : "#333333"} !important;
       }
       .computedNode rect {
-        fill: ${isDarkTheme.value ? '#111111' : '#ffffff'} !important;
-        stroke: ${isDarkTheme.value ? '#e0e0e0' : '#222222'} !important;
+        fill: ${isDarkTheme.value ? "#111111" : "#ffffff"} !important;
+        stroke: ${isDarkTheme.value ? "#e0e0e0" : "#222222"} !important;
       }
       .computedNode .nodeLabel {
-        color: ${isDarkTheme.value ? '#ecf0f1' : '#333333'} !important;
-        fill: ${isDarkTheme.value ? '#ecf0f1' : '#333333'} !important;
+        color: ${isDarkTheme.value ? "#ecf0f1" : "#333333"} !important;
+        fill: ${isDarkTheme.value ? "#ecf0f1" : "#333333"} !important;
       }
 
       /* Control panel styles */
@@ -58,7 +64,7 @@ export const useMermaidWebview = (fileName: string) => {
         right: 20px;
         display: flex;
         gap: 8px;
-        background-color: ${isDarkTheme.value ? '#333333' : '#f0f0f0'};
+        background-color: ${isDarkTheme.value ? "#333333" : "#f0f0f0"};
         border-radius: 4px;
         padding: 5px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -71,8 +77,8 @@ export const useMermaidWebview = (fileName: string) => {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: ${isDarkTheme.value ? '#444444' : '#e0e0e0'};
-        color: ${isDarkTheme.value ? '#e0e0e0' : '#333333'};
+        background-color: ${isDarkTheme.value ? "#444444" : "#e0e0e0"};
+        color: ${isDarkTheme.value ? "#e0e0e0" : "#333333"};
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -80,7 +86,7 @@ export const useMermaidWebview = (fileName: string) => {
       }
 
       .control-btn:hover {
-        background-color: ${isDarkTheme.value ? '#555555' : '#d0d0d0'};
+        background-color: ${isDarkTheme.value ? "#555555" : "#d0d0d0"};
       }
 
       /* Graph container */
@@ -121,7 +127,7 @@ export const useMermaidWebview = (fileName: string) => {
         font-size: 14px;
         font-weight: 500;
         opacity: 0.7;
-        color: ${isDarkTheme.value ? '#a0a0a0' : '#666666'};
+        color: ${isDarkTheme.value ? "#a0a0a0" : "#666666"};
         z-index: 50;
         letter-spacing: 0.5px;
         text-shadow: 0 1px 2px rgba(0,0,0,0.1);
@@ -149,7 +155,7 @@ export const useMermaidWebview = (fileName: string) => {
       // Mermaid configuration
       mermaid.initialize({
         startOnLoad: true,
-        theme: '${isDarkTheme.value ? 'dark' : 'default'}',
+        theme: '${isDarkTheme.value ? "dark" : "default"}',
         securityLevel: 'loose',
         flowchart: {
           curve: 'basis',
@@ -160,17 +166,17 @@ export const useMermaidWebview = (fileName: string) => {
           rankSpacing: 80,
         },
         themeVariables: {
-          primaryColor: '${isDarkTheme.value ? '#6272a4' : '#4682b4'}',
-          primaryTextColor: '${isDarkTheme.value ? '#f8f8f2' : '#333333'}',
-          primaryBorderColor: '${isDarkTheme.value ? '#4682b4' : '#0077cc'}',
-          lineColor: '${isDarkTheme.value ? '#4682b4' : '#0077cc'}',
-          secondaryColor: '${isDarkTheme.value ? '#44475a' : '#e6e6fa'}',
-          tertiaryColor: '${isDarkTheme.value ? '#2f3240' : '#ffffff'}',
-          edgeLabelBackground: '${isDarkTheme.value ? '#555555' : '#dddddd'}',
+          primaryColor: '${isDarkTheme.value ? "#6272a4" : "#4682b4"}',
+          primaryTextColor: '${isDarkTheme.value ? "#f8f8f2" : "#333333"}',
+          primaryBorderColor: '${isDarkTheme.value ? "#4682b4" : "#0077cc"}',
+          lineColor: '${isDarkTheme.value ? "#4682b4" : "#0077cc"}',
+          secondaryColor: '${isDarkTheme.value ? "#44475a" : "#e6e6fa"}',
+          tertiaryColor: '${isDarkTheme.value ? "#2f3240" : "#ffffff"}',
+          edgeLabelBackground: '${isDarkTheme.value ? "#555555" : "#dddddd"}',
           fontSize: '14px',
           edgeLabel: {
             fontSize: '11px',
-            color: '${isDarkTheme.value ? '#e0e0e0' : '#333333'}'
+            color: '${isDarkTheme.value ? "#e0e0e0" : "#333333"}'
           }
         }
       });
@@ -327,10 +333,11 @@ export const useMermaidWebview = (fileName: string) => {
     </script>
   </body>
   </html>
-  `)
+  `,
+  );
 
   const { postMessage, panel } = useWebviewPanel(
-    'graphai-visualizer-webview',
+    "graphai-visualizer-webview",
     `Graph - ${fileName}`,
     html,
     { viewColumn: ViewColumn.Beside },
@@ -339,13 +346,13 @@ export const useMermaidWebview = (fileName: string) => {
         enableScripts: true,
         enableCommandUris: true,
       },
-    }
-  )
+    },
+  );
 
   const updateGraph = (code: string, fileLanguageId: string) => {
-    const mermaid = codeToMermaid(code, fileLanguageId)
-    mermaidGraph.value = mermaid
-  }
+    const mermaid = codeToMermaid(code, fileLanguageId);
+    mermaidGraph.value = mermaid;
+  };
 
-  return { postMessage, panel, updateGraph }
-}
+  return { postMessage, panel, updateGraph };
+};

@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { codeToMermaid } from './codeToMermaid';
+import { describe, expect, it } from "vitest";
+import { codeToMermaid } from "./codeToMermaid";
 
-describe('codeToMermaid -- yaml', () => {
+describe("codeToMermaid -- yaml", () => {
   const testCases = [
     {
-      name: 'should convert simple two-node structure',
+      name: "should convert simple two-node structure",
       yaml: `
 nodes:
   input:
@@ -21,10 +21,10 @@ flowchart TD
  input --> output
 class input staticNode
 class output computedNode
-`.trim()
+`.trim(),
     },
     {
-      name: 'should correctly convert basic node structure',
+      name: "should correctly convert basic node structure",
       yaml: `
 version: 0.5
 loop:
@@ -75,10 +75,10 @@ flowchart TD
  llm -- choices.$0.message.content --> reducer
 class fruits,result staticNode
 class shift,prompt,llm,reducer computedNode
-`.trim()
+`.trim(),
     },
     {
-      name: 'should convert nodes with multiple inputs',
+      name: "should convert nodes with multiple inputs",
       yaml: `
 version: 0.5
 loop:
@@ -159,22 +159,22 @@ flowchart TD
  llm -- choices.$0.message --> reducer
 class continue,messages staticNode
 class userInput,checkInput,userMessage,appendedMessages,llm,output,reducer computedNode
-`.trim()
-    }
+`.trim(),
+    },
   ];
 
-  testCases.forEach(({ name, yaml, expected }) => {
+  for (const { name, yaml, expected } of testCases) {
     it(name, () => {
-      const result = codeToMermaid(yaml, 'yaml');
+      const result = codeToMermaid(yaml, "yaml");
       expect(result).toBe(expected);
     });
-  });
+  }
 });
 
-describe('codeToMermaid -- json', () => {
+describe("codeToMermaid -- json", () => {
   const testCases = [
     {
-      name: 'should convert simple two-node structure',
+      name: "should convert simple two-node structure",
       json: `{
   "nodes": {
     "input": {
@@ -195,10 +195,10 @@ flowchart TD
  input --> output
 class input staticNode
 class output computedNode
-`.trim()
+`.trim(),
     },
     {
-      name: 'should correctly convert basic node structure',
+      name: "should correctly convert basic node structure",
       json: `{
   "version": "0.5",
   "loop": {
@@ -262,22 +262,22 @@ flowchart TD
  llm -- choices.$0.message.content --> reducer
 class fruits,result staticNode
 class shift,prompt,llm,reducer computedNode
-`.trim()
-    }
+`.trim(),
+    },
   ];
 
-  testCases.forEach(({ name, json, expected }) => {
+  for (const { name, json, expected } of testCases) {
     it(name, () => {
-      const result = codeToMermaid(json, 'json');
+      const result = codeToMermaid(json, "json");
       expect(result).toBe(expected);
     });
-  });
+  }
 });
 
-describe(`codeToMermaid -- yaml, nested nodes`, () => {
+describe("codeToMermaid -- yaml, nested nodes", () => {
   const testCases = [
     {
-      name: 'should convert simple nested nodes with iterative inputs',
+      name: "should convert simple nested nodes with iterative inputs",
       yaml: `
 version: 0.5
 nodes:
@@ -320,7 +320,7 @@ class map nestedGraph
 `.trim(),
     },
     {
-      name: 'should convert nested node with template input',
+      name: "should convert nested node with template input",
       yaml: `
 version: 0.5
 nodes:
@@ -380,7 +380,7 @@ class nestedNode nestedGraph
 `.trim(),
     },
     {
-      name: 'should convert dynamic nested node',
+      name: "should convert dynamic nested node",
       yaml: `
 version: 0.5
 nodes:
@@ -443,17 +443,15 @@ flowchart TD
  subgraph executer[executer: <span class="agent-name">nestedAgent</span>]
  end
 class document,sampleGraph,graphGenerator computedNode
-class executer nestedGraph    
-`.trim()
-    }
+class executer nestedGraph
+`.trim(),
+    },
   ];
 
-  testCases.forEach(({ name, yaml, expected }) => {
+  for (const { name, yaml, expected } of testCases) {
     it(name, () => {
-      const result = codeToMermaid(yaml, 'yaml'); 
+      const result = codeToMermaid(yaml, "yaml");
       expect(result).toBe(expected);
     });
-  });
+  }
 });
-
-
