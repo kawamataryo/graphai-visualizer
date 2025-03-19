@@ -24,7 +24,7 @@ export = defineExtension(() => {
     const openFileUri = document.uri.toString()
     const position = editor.value.selection.active
 
-    // JSONまたはYAMLファイルの場合
+    // For JSON or YAML files
     if (fileLanguageId === 'json' || fileLanguageId === 'yaml') {
       const text = useDocumentText(() => editor.value?.document)
 
@@ -34,7 +34,7 @@ export = defineExtension(() => {
       updateGraph(text.value ?? '', fileLanguageId)
       onDidSaveTextDocument((document) => {
         if (openFileUri === document.uri.toString()) {
-          // 保存時にフォーマットをチェック
+          // Check format on save
           if (document.languageId === 'json' || document.languageId === 'yaml') {
             updateGraph(document.getText(), document.languageId)
           }
@@ -43,9 +43,9 @@ export = defineExtension(() => {
       return
     }
 
-    // TypeScriptファイルの場合
+    // For TypeScript files
     if (fileLanguageId === 'typescript') {
-      // GraphAIオブジェクトをパース
+      // Parse GraphAI object
       const jsonData = await parseGraphAIObject(document, position)
       logger.info(jsonData)
 
@@ -60,7 +60,7 @@ export = defineExtension(() => {
       }
     }
 
-    // サポートされていないファイル形式
+    // Unsupported file format
     window.showInformationMessage('Unsupported file format. Only JSON, YAML, or TypeScript files are supported.')
   })
 })
