@@ -20,7 +20,7 @@ export = defineExtension(() => {
   useCommand("graphai-visualizer.showGraph", async () => {
     const editor = useActiveTextEditor();
     if (!editor.value) {
-      window.showInformationMessage("Editor is not opened.");
+      window.showErrorMessage("Editor is not active.");
       return;
     }
 
@@ -68,14 +68,14 @@ export = defineExtension(() => {
         return;
       }
 
-      window.showInformationMessage(
+      window.showErrorMessage(
         "No GraphAI object found at the selection position.",
       );
       return;
     }
 
     // Unsupported file format
-    window.showInformationMessage(
+    window.showErrorMessage(
       "Unsupported file format. Only JSON, YAML, or TypeScript files are supported.",
     );
   });
