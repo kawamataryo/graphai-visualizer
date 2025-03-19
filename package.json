@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "graphai": "^0.6.26",
+    "typescript": "^5.4.5",
     "yaml": "^2.7.0"
   }
 }

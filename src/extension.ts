@@ -1,39 +1,66 @@
-import { defineExtension, useActiveTextEditor, useCommand, useDocumentText, useEvent, useIsDarkTheme, watchEffect } from 'reactive-vscode'
+import { defineExtension, useActiveTextEditor, useCommand, useDocumentText, useEvent } from 'reactive-vscode'
 import { logger } from './utils'
 import { useMermaidWebview } from './composables/useMermaidWebview'
-import { workspace } from 'vscode'
+import { workspace, window } from 'vscode'
+import { parseGraphAIObject } from './composables/useGraphAIParser'
 
 export = defineExtension(() => {
   logger.info('Extension Activated')
   const onDidSaveTextDocument = useEvent(workspace.onDidSaveTextDocument)
 
-
-  useCommand('graphai-visualizer.showGraph', () => {
+  /**
+   * Show graph from JSON, YAML file or TypeScript selection
+   */
+  useCommand('graphai-visualizer.showGraph', async () => {
     const editor = useActiveTextEditor()
-    const text = useDocumentText(() => editor.value?.document)
-    const fileLanguageId = editor.value?.document.languageId
-    const fileName = editor.value?.document.fileName?.split('/').pop() || editor.value?.document.fileName?.split('\\').pop() || ''
-    const openFileUri = editor.value?.document.uri.toString()
-
-    // Check if the file is JSON or YAML
-    if (fileLanguageId !== 'json' && fileLanguageId !== 'yaml') {
-      // Display error message
-      const vscode = require('vscode');
-      vscode.window.showInformationMessage('Invalid file format. Only JSON or YAML files are supported.');
-      return;
+    if (!editor.value) {
+      window.showInformationMessage('Editor is not opened.')
+      return
     }
 
-    const { panel, updateGraph } = useMermaidWebview(fileName ?? '')
-    panel.reveal()
+    const document = editor.value.document
+    const fileLanguageId = document.languageId
+    const fileName = document.fileName?.split('/').pop() || document.fileName?.split('\\').pop() || ''
+    const openFileUri = document.uri.toString()
+    const position = editor.value.selection.active
 
-    updateGraph(text.value ?? '', fileLanguageId ?? '')
-    onDidSaveTextDocument((document) => {
-      if (openFileUri === document.uri.toString()) {
-        // Check format when saving
-        if (document.languageId === 'json' || document.languageId === 'yaml') {
-          updateGraph(document.getText(), document.languageId)
+    // JSONまたはYAMLファイルの場合
+    if (fileLanguageId === 'json' || fileLanguageId === 'yaml') {
+      const text = useDocumentText(() => editor.value?.document)
+
+      const { panel, updateGraph } = useMermaidWebview(fileName)
+      panel.reveal()
+
+      updateGraph(text.value ?? '', fileLanguageId)
+      onDidSaveTextDocument((document) => {
+        if (openFileUri === document.uri.toString()) {
+          // 保存時にフォーマットをチェック
+          if (document.languageId === 'json' || document.languageId === 'yaml') {
+            updateGraph(document.getText(), document.languageId)
+          }
         }
+      })
+      return
+    }
+
+    // TypeScriptファイルの場合
+    if (fileLanguageId === 'typescript') {
+      // GraphAIオブジェクトをパース
+      const jsonData = await parseGraphAIObject(document, position)
+      logger.info(jsonData)
+
+      if (jsonData) {
+        const { panel, updateGraph } = useMermaidWebview(fileName)
+        panel.reveal()
+        updateGraph(jsonData, 'json')
+        return
+      } else {
+        window.showInformationMessage('No GraphAI object found at the selection position.')
+        return
       }
-    })
+    }
+
+    // サポートされていないファイル形式
+    window.showInformationMessage('Unsupported file format. Only JSON, YAML, or TypeScript files are supported.')
   })
 })
