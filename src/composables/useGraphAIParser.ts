@@ -16,25 +16,17 @@ export async function parseGraphAIObject(
     const jsonSafeObject = parseObjectWithReferences(sourceCode, position);
 
     if (!jsonSafeObject) {
-      vscode.window.showInformationMessage(
-        "No object found at cursor position.",
-      );
       return null;
     }
 
     // Check if the object looks like a GraphAI graph
     if (!isGraphAILike(jsonSafeObject)) {
-      vscode.window.showInformationMessage(
-        "The object at cursor position does not appear to be a GraphAI graph.",
-      );
       return null;
     }
 
     // Convert to JSON string
     return JSON.stringify(jsonSafeObject, null, 2);
   } catch (error) {
-    vscode.window.showErrorMessage("Error parsing object.");
-    logger.error("Object parsing error:", error);
     return null;
   }
 }

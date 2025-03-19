@@ -10,6 +10,7 @@ import { parseGraphAIObject } from "./composables/useGraphAIParser";
 import { useMermaidWebview } from "./composables/useMermaidWebview";
 import { logger } from "./utils";
 
+// @ts-ignore
 export = defineExtension(() => {
   logger.info("Extension Activated");
   const onDidSaveTextDocument = useEvent(workspace.onDidSaveTextDocument);
