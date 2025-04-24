@@ -67,7 +67,7 @@ export = defineExtension(() => {
         panel.reveal();
         updateGraph(jsonData, "json");
 
-        onDidSaveTextDocument(async(document) => {
+        onDidSaveTextDocument(async (document) => {
           if (openFileUri === document.uri.toString()) {
             const jsonData = await parseGraphAIObject(document, position);
             if (jsonData) {

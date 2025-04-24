@@ -1,10 +1,10 @@
+import * as ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
 import {
-  findObjectAtPosition,
   convertToJsonSafeObject,
+  findObjectAtPosition,
   parseObjectWithReferences,
 } from "./objectParser";
-import * as ts from "typescript";
 
 // Mock in the same format as VSCode's Position interface
 interface Position {
@@ -24,7 +24,10 @@ interface Position {
 
 // Mock implementation
 class MockPosition implements Position {
-  constructor(public readonly line: number, public readonly character: number) {}
+  constructor(
+    public readonly line: number,
+    public readonly character: number,
+  ) {}
 
   isBefore(): boolean {
     return false;
@@ -54,12 +57,12 @@ class MockPosition implements Position {
 
 // Create a mock for the VSCode module
 const vscode = {
-  Position: MockPosition
+  Position: MockPosition,
 };
 
 // Replace VSCode import with mock
 vi.mock("vscode", () => ({
-  Position: MockPosition
+  Position: MockPosition,
 }));
 
 describe("objectParser", () => {
@@ -137,7 +140,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       // The function under test requires the semantics of specific nodes, so use nodes parsed by the parser
@@ -167,7 +170,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       // Get array node
@@ -193,7 +196,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statement = sourceFile.statements[0] as ts.VariableStatement;
@@ -205,7 +208,7 @@ const obj = {
       // Compare the result with the actual obtained value, not the expected result
       const expected = {
         regularFunction: "<expr>AnonymousFunctionAgent</expr>",
-        arrowFunction: "<expr>AnonymousFunctionAgent</expr>"
+        arrowFunction: "<expr>AnonymousFunctionAgent</expr>",
       };
 
       expect(result).toEqual(expected);
@@ -223,7 +226,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statement = sourceFile.statements[0] as ts.VariableStatement;
@@ -249,13 +252,14 @@ const extended = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statements = sourceFile.statements;
       const extendedDecl = (statements[1] as ts.VariableStatement)
         .declarationList.declarations[0];
-      const extendedObj = extendedDecl.initializer as ts.ObjectLiteralExpression;
+      const extendedObj =
+        extendedDecl.initializer as ts.ObjectLiteralExpression;
 
       const result = convertToJsonSafeObject(extendedObj, sourceFile);
 
@@ -277,7 +281,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statement = sourceFile.statements[1] as ts.VariableStatement;
@@ -303,7 +307,7 @@ const obj = {
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statement = sourceFile.statements[1] as ts.VariableStatement;
@@ -327,7 +331,7 @@ const obj = { name, age };
         "temp.ts",
         sourceCode,
         ts.ScriptTarget.Latest,
-        true
+        true,
       );
 
       const statement = sourceFile.statements[2] as ts.VariableStatement;
@@ -395,10 +399,10 @@ const config = {
       expect(result).toEqual({
         database: {
           host: "localhost",
-          port: 3306
+          port: 3306,
         },
         features: ["login", "signup", "profile"],
-        enabled: true
+        enabled: true,
       });
     });
 
@@ -415,7 +419,7 @@ const handlers = {
 
       expect(result).toEqual({
         onClick: "<expr>AnonymousFunctionAgent</expr>",
-        onHover: "<expr>AnonymousFunctionAgent</expr>"
+        onHover: "<expr>AnonymousFunctionAgent</expr>",
       });
     });
   });
