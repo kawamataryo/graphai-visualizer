@@ -34,11 +34,11 @@ const addConnectionsToGraph = ({
       if (source.nodeId) {
         if (source.propIds) {
           lines.push(
-            `${indent}${parentNodePath}${source.nodeId} -- ${source.propIds.join(".")} --> ${parentNodePath}${nodeId}`,
+            `${indent}n_${parentNodePath}${source.nodeId} -- ${source.propIds.join(".")} --> n_${parentNodePath}${nodeId}`,
           );
         } else {
           lines.push(
-            `${indent}${parentNodePath}${source.nodeId} --> ${parentNodePath}${nodeId}`,
+            `${indent}n_${parentNodePath}${source.nodeId} --> n_${parentNodePath}${nodeId}`,
           );
         }
       }
@@ -75,6 +75,7 @@ const processGraph = ({
   for (const nodeId of Object.keys(graphData.nodes)) {
     const node = graphData.nodes[nodeId];
     const fullNodeId = `${parentNodePath}${nodeId}`;
+    const mermaidNodeId = `n_${fullNodeId}`; // Mermaid用のノードIDに接頭辞を追加
     const indent = makeIndent(parentNodePath);
     if ("graph" in node) {
       const inputs = typeof node.graph === "string" ? node.graph : node.inputs;
@@ -88,7 +89,7 @@ const processGraph = ({
         });
       }
       lines.push(
-        `${indent}subgraph ${fullNodeId}[${nodeId}: <span class="agent-name">${node.agent}</span>]`,
+        `${indent}subgraph ${mermaidNodeId}[${nodeId}: <span class="agent-name">${node.agent}</span>]`,
       );
       if ((node.graph as GraphData).nodes) {
         processGraph({
@@ -101,10 +102,10 @@ const processGraph = ({
         });
       }
       lines.push(`${indent}end`);
-      nestedGraphNodes.push(fullNodeId);
+      nestedGraphNodes.push(mermaidNodeId);
     } else if ("agent" in node) {
       lines.push(
-        `${indent}${fullNodeId}(${nodeId}<br/><span class="agent-name">${node.agent}</span>)`,
+        `${indent}${mermaidNodeId}(${nodeId}<br/><span class="agent-name">${node.agent}</span>)`,
       );
       if (node.inputs) {
         addConnectionsToGraph({
@@ -115,10 +116,10 @@ const processGraph = ({
           parentNodePath,
         });
       }
-      computedNodes.push(fullNodeId);
+      computedNodes.push(mermaidNodeId);
     } else {
-      lines.push(`${indent}${fullNodeId}(${nodeId})`);
-      staticNodes.push(fullNodeId);
+      lines.push(`${indent}${mermaidNodeId}(${nodeId})`);
+      staticNodes.push(mermaidNodeId);
       if ("update" in node) {
         addConnectionsToGraph({
           lines,

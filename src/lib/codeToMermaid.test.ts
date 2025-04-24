@@ -16,11 +16,11 @@ nodes:
 `,
       expected: `
 flowchart TD
- input(input)
- output(output<br/><span class="agent-name">echoAgent</span>)
- input --> output
-class input staticNode
-class output computedNode
+ n_input(input)
+ n_output(output<br/><span class="agent-name">echoAgent</span>)
+ n_input --> n_output
+class n_input staticNode
+class n_output computedNode
 `.trim(),
     },
     {
@@ -60,21 +60,21 @@ nodes:
 `,
       expected: `
 flowchart TD
- fruits(fruits)
- shift -- array --> fruits
- result(result)
- reducer --> result
- shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits --> shift
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift -- item --> prompt
- llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt --> llm
- reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result --> reducer
- llm -- choices.$0.message.content --> reducer
-class fruits,result staticNode
-class shift,prompt,llm,reducer computedNode
+ n_fruits(fruits)
+ n_shift -- array --> n_fruits
+ n_result(result)
+ n_reducer --> n_result
+ n_shift(shift<br/><span class="agent-name">shiftAgent</span>)
+ n_fruits --> n_shift
+ n_prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
+ n_shift -- item --> n_prompt
+ n_llm(llm<br/><span class="agent-name">openAIAgent</span>)
+ n_prompt --> n_llm
+ n_reducer(reducer<br/><span class="agent-name">pushAgent</span>)
+ n_result --> n_reducer
+ n_llm -- choices.$0.message.content --> n_reducer
+class n_fruits,n_result staticNode
+class n_shift,n_prompt,n_llm,n_reducer computedNode
 `.trim(),
     },
     {
@@ -138,27 +138,27 @@ nodes:
 `,
       expected: `
 flowchart TD
- continue(continue)
- checkInput -- continue --> continue
- messages(messages)
- reducer --> messages
- userInput(userInput<br/><span class="agent-name">textInputAgent</span>)
- checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput --> checkInput
- userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>)
- userInput --> userMessage
- appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>)
- messages --> appendedMessages
- userMessage --> appendedMessages
- llm(llm<br/><span class="agent-name">openAIAgent</span>)
- appendedMessages --> llm
- output(output<br/><span class="agent-name">stringTemplateAgent</span>)
- llm -- choices.$0.message.content --> output
- reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- appendedMessages --> reducer
- llm -- choices.$0.message --> reducer
-class continue,messages staticNode
-class userInput,checkInput,userMessage,appendedMessages,llm,output,reducer computedNode
+ n_continue(continue)
+ n_checkInput -- continue --> n_continue
+ n_messages(messages)
+ n_reducer --> n_messages
+ n_userInput(userInput<br/><span class="agent-name">textInputAgent</span>)
+ n_checkInput(checkInput<br/><span class="agent-name">propertyFilterAgent</span>)
+ n_userInput --> n_checkInput
+ n_userMessage(userMessage<br/><span class="agent-name">propertyFilterAgent</span>)
+ n_userInput --> n_userMessage
+ n_appendedMessages(appendedMessages<br/><span class="agent-name">pushAgent</span>)
+ n_messages --> n_appendedMessages
+ n_userMessage --> n_appendedMessages
+ n_llm(llm<br/><span class="agent-name">openAIAgent</span>)
+ n_appendedMessages --> n_llm
+ n_output(output<br/><span class="agent-name">stringTemplateAgent</span>)
+ n_llm -- choices.$0.message.content --> n_output
+ n_reducer(reducer<br/><span class="agent-name">pushAgent</span>)
+ n_appendedMessages --> n_reducer
+ n_llm -- choices.$0.message --> n_reducer
+class n_continue,n_messages staticNode
+class n_userInput,n_checkInput,n_userMessage,n_appendedMessages,n_llm,n_output,n_reducer computedNode
 `.trim(),
     },
   ];
@@ -190,11 +190,11 @@ describe("codeToMermaid -- json", () => {
 }`,
       expected: `
 flowchart TD
- input(input)
- output(output<br/><span class="agent-name">echoAgent</span>)
- input --> output
-class input staticNode
-class output computedNode
+ n_input(input)
+ n_output(output<br/><span class="agent-name">echoAgent</span>)
+ n_input --> n_output
+class n_input staticNode
+class n_output computedNode
 `.trim(),
     },
     {
@@ -247,21 +247,21 @@ class output computedNode
 }`,
       expected: `
 flowchart TD
- fruits(fruits)
- shift -- array --> fruits
- result(result)
- reducer --> result
- shift(shift<br/><span class="agent-name">shiftAgent</span>)
- fruits --> shift
- prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
- shift -- item --> prompt
- llm(llm<br/><span class="agent-name">openAIAgent</span>)
- prompt --> llm
- reducer(reducer<br/><span class="agent-name">pushAgent</span>)
- result --> reducer
- llm -- choices.$0.message.content --> reducer
-class fruits,result staticNode
-class shift,prompt,llm,reducer computedNode
+ n_fruits(fruits)
+ n_shift -- array --> n_fruits
+ n_result(result)
+ n_reducer --> n_result
+ n_shift(shift<br/><span class="agent-name">shiftAgent</span>)
+ n_fruits --> n_shift
+ n_prompt(prompt<br/><span class="agent-name">stringTemplateAgent</span>)
+ n_shift -- item --> n_prompt
+ n_llm(llm<br/><span class="agent-name">openAIAgent</span>)
+ n_prompt --> n_llm
+ n_reducer(reducer<br/><span class="agent-name">pushAgent</span>)
+ n_result --> n_reducer
+ n_llm -- choices.$0.message.content --> n_reducer
+class n_fruits,n_result staticNode
+class n_shift,n_prompt,n_llm,n_reducer computedNode
 `.trim(),
     },
   ];
@@ -306,17 +306,17 @@ nodes:
 `,
       expected: `
 flowchart TD
- fruits(fruits)
- fruits --> map
- subgraph map[map: <span class="agent-name">mapAgent</span>]
-  map.llm(llm<br/><span class="agent-name">openAIAgent</span>)
-  map.row --> map.llm
-  map.result(result<br/><span class="agent-name">copyAgent</span>)
-  map.llm -- text --> map.result
+ n_fruits(fruits)
+ n_fruits --> n_map
+ subgraph n_map[map: <span class="agent-name">mapAgent</span>]
+  n_map.llm(llm<br/><span class="agent-name">openAIAgent</span>)
+  n_map.row --> n_map.llm
+  n_map.result(result<br/><span class="agent-name">copyAgent</span>)
+  n_map.llm -- text --> n_map.result
  end
-class fruits staticNode
-class map.llm,map.result computedNode
-class map nestedGraph
+class n_fruits staticNode
+class n_map.llm,n_map.result computedNode
+class n_map nestedGraph
 `.trim(),
     },
     {
@@ -361,22 +361,22 @@ nodes:
 `,
       expected: `
 flowchart TD
- source1(source1)
- source2(source2)
- source3(source3)
- source4(source4)
- source1 -- fruit --> nestedNode
- source2 -- fruit --> nestedNode
- source3 -- fruit --> nestedNode
- source4 -- fruit --> nestedNode
- subgraph nestedNode[nestedNode: <span class="agent-name">mapAgent</span>]
-  nestedNode.node2(node2<br/><span class="agent-name">stringTemplateAgent</span>)
+ n_source1(source1)
+ n_source2(source2)
+ n_source3(source3)
+ n_source4(source4)
+ n_source1 -- fruit --> n_nestedNode
+ n_source2 -- fruit --> n_nestedNode
+ n_source3 -- fruit --> n_nestedNode
+ n_source4 -- fruit --> n_nestedNode
+ subgraph n_nestedNode[nestedNode: <span class="agent-name">mapAgent</span>]
+  n_nestedNode.node2(node2<br/><span class="agent-name">stringTemplateAgent</span>)
  end
- result(result<br/><span class="agent-name">sleeperAgent</span>)
- nestedNode --> result
-class source1,source2,source3,source4 staticNode
-class nestedNode.node2,result computedNode
-class nestedNode nestedGraph
+ n_result(result<br/><span class="agent-name">sleeperAgent</span>)
+ n_nestedNode --> n_result
+class n_source1,n_source2,n_source3,n_source4 staticNode
+class n_nestedNode.node2,n_result computedNode
+class n_nestedNode nestedGraph
 `.trim(),
     },
     {
@@ -434,16 +434,16 @@ nodes:
 `,
       expected: `
 flowchart TD
- document(document<br/><span class="agent-name">fetchAgent</span>)
- sampleGraph(sampleGraph<br/><span class="agent-name">fetchAgent</span>)
- graphGenerator(graphGenerator<br/><span class="agent-name">openAIAgent</span>)
- document --> graphGenerator
- sampleGraph --> graphGenerator
- graphGenerator -- text.codeBlock().jsonParse() --> executer
- subgraph executer[executer: <span class="agent-name">nestedAgent</span>]
+ n_document(document<br/><span class="agent-name">fetchAgent</span>)
+ n_sampleGraph(sampleGraph<br/><span class="agent-name">fetchAgent</span>)
+ n_graphGenerator(graphGenerator<br/><span class="agent-name">openAIAgent</span>)
+ n_document --> n_graphGenerator
+ n_sampleGraph --> n_graphGenerator
+ n_graphGenerator -- text.codeBlock().jsonParse() --> n_executer
+ subgraph n_executer[executer: <span class="agent-name">nestedAgent</span>]
  end
-class document,sampleGraph,graphGenerator computedNode
-class executer nestedGraph
+class n_document,n_sampleGraph,n_graphGenerator computedNode
+class n_executer nestedGraph
 `.trim(),
     },
   ];
