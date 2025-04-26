@@ -309,6 +309,16 @@
       "name": "runShellAgent",
       "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/system/runShellAgent.md",
       "source": "https://github.com/receptron/graphai-agents/blob/main/system/run_shell_agent/src/run_shell_agent.ts"
+    },
+    {
+      "name": "fileWriteAgent",
+      "docs": "https://github.com/receptron/graphai/blob/4853895b6ea5e263d07611912ef5601da1f368f5/agents/vanilla_node_agents/README.md",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_node_agents/src/node_file_agents/file_write_agent.ts"
+    },
+    {
+      "name": "pathUtilsAgent",
+      "docs": "https://github.com/receptron/graphai/blob/4853895b6ea5e263d07611912ef5601da1f368f5/agents/vanilla_node_agents/README.md",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_node_agents/src/node_file_agents/path_utils_agent.ts"
     }
   ]
 }
