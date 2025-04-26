@@ -1,0 +1,314 @@
+{
+  "agents": [
+    {
+      "name": "arrayFlatAgent",
+      "docs": "https://graphai.info/agentDocs/array/arrayFlatAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/array_agents/array_flat_agent.ts"
+    },
+    {
+      "name": "arrayJoinAgent",
+      "docs": "https://graphai.info/agentDocs/array/arrayJoinAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/array_agents/array_join_agent.ts"
+    },
+    {
+      "name": "popAgent",
+      "docs": "https://graphai.info/agentDocs/array/popAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/array_agents/pop_agent.ts"
+    },
+    {
+      "name": "pushAgent",
+      "docs": "https://graphai.info/agentDocs/array/pushAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/array_agents/push_agent.ts"
+    },
+    {
+      "name": "shiftAgent",
+      "docs": "https://graphai.info/agentDocs/array/shiftAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/array_agents/shift_agent.ts"
+    },
+    {
+      "name": "compareAgent",
+      "docs": "https://graphai.info/agentDocs/compare/compareAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/compare_agents/compare_agent.ts"
+    },
+    {
+      "name": "copyAgent",
+      "docs": "https://graphai.info/agentDocs/data/copyAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/copy_agent.ts"
+    },
+    {
+      "name": "dataObjectMergeTemplateAgent",
+      "docs": "https://graphai.info/agentDocs/data/dataObjectMergeTemplateAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/data_object_merge_template_agent.ts"
+    },
+    {
+      "name": "dataSumTemplateAgent",
+      "docs": "https://graphai.info/agentDocs/data/dataSumTemplateAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/data_sum_template_agent.ts"
+    },
+    {
+      "name": "lookupDictionaryAgent",
+      "docs": "https://graphai.info/agentDocs/data/lookupDictionaryAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/lookup_dictionary_agent.ts"
+    },
+    {
+      "name": "propertyFilterAgent",
+      "docs": "https://graphai.info/agentDocs/data/propertyFilterAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/property_filter_agent.ts"
+    },
+    {
+      "name": "totalAgent",
+      "docs": "https://graphai.info/agentDocs/data/totalAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/data_agents/total_agent.ts"
+    },
+    {
+      "name": "stringEmbeddingsAgent",
+      "docs": "https://graphai.info/agentDocs/embedding/stringEmbeddingsAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/embedding_agents/string_embeddings_agent.ts"
+    },
+    {
+      "name": "fileReadAgent",
+      "docs": "https://graphai.info/agentDocs/fs/fileReadAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/fs_agents/file_read_agent.ts"
+    },
+    {
+      "name": "mapAgent",
+      "docs": "https://graphai.info/agentDocs/graph/mapAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/graph_agents/map_agent.ts"
+    },
+    {
+      "name": "nestedAgent",
+      "docs": "https://graphai.info/agentDocs/graph/nestedAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/graph_agents/nested_agent.ts"
+    },
+    {
+      "name": "workerAgent",
+      "docs": "https://graphai.info/agentDocs/graph/workerAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/graph_agents/worker_agent.ts"
+    },
+    {
+      "name": "images2messageAgent",
+      "docs": "https://graphai.info/agentDocs/image/images2messageAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/image_agents/images2message_agent.ts"
+    },
+    {
+      "name": "textInputAgent",
+      "docs": "https://graphai.info/agentDocs/input/textInputAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/input_agents/text_input_agent.ts"
+    },
+    {
+      "name": "anthropicAgent",
+      "docs": "https://graphai.info/agentDocs/llm/anthropicAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/anthropic_agent.ts"
+    },
+    {
+      "name": "geminiAgent",
+      "docs": "https://graphai.info/agentDocs/llm/geminiAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/gemini_agent.ts"
+    },
+    {
+      "name": "groqAgent",
+      "docs": "https://graphai.info/agentDocs/llm/groqAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/groq_agent.ts"
+    },
+    {
+      "name": "openAIAgent",
+      "docs": "https://graphai.info/agentDocs/llm/openAIAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/openai_agent.ts"
+    },
+    {
+      "name": "openAIFetchAgent",
+      "docs": "https://graphai.info/agentDocs/llm/openAIFetchAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/openai_fetch_agent.ts"
+    },
+    {
+      "name": "openAIImageAgent",
+      "docs": "https://graphai.info/agentDocs/llm/openAIImageAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/openai_image_agent.ts"
+    },
+    {
+      "name": "replicateAgent",
+      "docs": "https://graphai.info/agentDocs/llm/replicateAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/replicate_agent.ts"
+    },
+    {
+      "name": "slashGPTAgent",
+      "docs": "https://graphai.info/agentDocs/llm/slashGPTAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/llm_agents/slashgpt_agent.ts"
+    },
+    {
+      "name": "dotProductAgent",
+      "docs": "https://graphai.info/agentDocs/matrix/dotProductAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/matrix_agents/dot_product_agent.ts"
+    },
+    {
+      "name": "sortByValuesAgent",
+      "docs": "https://graphai.info/agentDocs/matrix/sortByValuesAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/matrix_agents/sort_by_values_agent.ts"
+    },
+    {
+      "name": "fetchAgent",
+      "docs": "https://graphai.info/agentDocs/service/fetchAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/service_agents/fetch_agent.ts"
+    },
+    {
+      "name": "vanillaFetchAgent",
+      "docs": "https://graphai.info/agentDocs/service/vanillaFetchAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/service_agents/vanilla_fetch_agent.ts"
+    },
+    {
+      "name": "wikipediaAgent",
+      "docs": "https://graphai.info/agentDocs/service/wikipediaAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/service_agents/wikipedia_agent.ts"
+    },
+    {
+      "name": "sleepAndMergeAgent",
+      "docs": "https://graphai.info/agentDocs/sleeper/sleepAndMergeAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/sleeper_agents/sleep_and_merge_agent.ts"
+    },
+    {
+      "name": "sleeperAgent",
+      "docs": "https://graphai.info/agentDocs/sleeper/sleeperAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/sleeper_agents/sleeper_agent.ts"
+    },
+    {
+      "name": "sleeperAgentDebug",
+      "docs": "https://graphai.info/agentDocs/sleeper/sleeperAgentDebug.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/sleeper_agents/sleeper_agent_debug.ts"
+    },
+    {
+      "name": "jsonParserAgent",
+      "docs": "https://graphai.info/agentDocs/string/jsonParserAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/string_agents/json_parser_agent.ts"
+    },
+    {
+      "name": "stringCaseVariantsAgent",
+      "docs": "https://graphai.info/agentDocs/string/stringCaseVariantsAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/string_agents/string_case_variants_agent.ts"
+    },
+    {
+      "name": "stringSplitterAgent",
+      "docs": "https://graphai.info/agentDocs/string/stringSplitterAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/string_agents/string_splitter_agent.ts"
+    },
+    {
+      "name": "stringTemplateAgent",
+      "docs": "https://graphai.info/agentDocs/string/stringTemplateAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/string_agents/string_template_agent.ts"
+    },
+    {
+      "name": "bypassAgent",
+      "docs": "https://graphai.info/agentDocs/test/bypassAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/bypass_agent.ts"
+    },
+    {
+      "name": "copy2ArrayAgent",
+      "docs": "https://graphai.info/agentDocs/test/copy2ArrayAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/copy2array_agent.ts"
+    },
+    {
+      "name": "copyMessageAgent",
+      "docs": "https://graphai.info/agentDocs/test/copyMessageAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/copy_message_agent.ts"
+    },
+    {
+      "name": "countingAgent",
+      "docs": "https://graphai.info/agentDocs/test/countingAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/counting_agent.ts"
+    },
+    {
+      "name": "echoAgent",
+      "docs": "https://graphai.info/agentDocs/test/echoAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/echo_agent.ts"
+    },
+    {
+      "name": "mergeNodeIdAgent",
+      "docs": "https://graphai.info/agentDocs/test/mergeNodeIdAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/merge_node_id_agent.ts"
+    },
+    {
+      "name": "streamMockAgent",
+      "docs": "https://graphai.info/agentDocs/test/streamMockAgent.html",
+      "source": "https://github.com/receptron/graphai/blob/main/agents/vanilla_agents/src/test_agents/stream_mock_agent.ts"
+    },
+    {
+      "name": "pdf2textAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/documents/pdf2textAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/documents/pdf2text_agent/src/pdf2text_agent.ts"
+    },
+    {
+      "name": "arxivAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/arxivAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/net/arxiv_agent/src/arxiv_agent.ts"
+    },
+    {
+      "name": "braveSearchAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/braveSearchAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/net/brave_search_agent/src/brave_search_agent.ts"
+    },
+    {
+      "name": "browserlessAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/browserlessAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/net/browserless_agent/src/browserless_agent.ts"
+    },
+    {
+      "name": "serperAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/serperAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/net/serper_agent/src/serper_agent.ts"
+    },
+    {
+      "name": "slackAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/slackAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/net/slack_agent/src/slack_agent.ts"
+    },
+    {
+      "name": "awesomeChatgptPromptsAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/awesomeChatgptPromptsAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/prompt/awesome_chatgpt_prompts_agent/src/awesome_chatgpt_prompts_agent.ts"
+    },
+    {
+      "name": "promptsAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/promptsAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/prompt/prompts_agent/src/prompts_agent.ts"
+    },
+    {
+      "name": "ttsNijivoiceAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/voice/ttsNijivoiceAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/voice/tts_nijivoice_agent/src/tts_nijivoice_agent.ts"
+    },
+    {
+      "name": "ttsOpenaiAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/voice/ttsOpenaiAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/voice/tts_openai_agent/src/tts_openai_agent.ts"
+    },
+    {
+      "name": "sttOpenaiAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/voice/sttOpenaiAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/voice/stt_openai_agent/src/stt_openai_agent.ts"
+    },
+    {
+      "name": "mcpToolsListAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/protocol/mcpToolsListAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/protocol/mcp_tools_list_agent/src/mcp_tools_list_agent.ts"
+    },
+    {
+      "name": "mcpToolsCallAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/protocol/mcpToolsCallAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/protocol/mcp-agent/src/mcp_tools_call_agent.ts"
+    },
+    {
+      "name": "mcpResourceAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/protocol/mcpResourceAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/protocol/mcp-agent/src/mcp_resource_agent.ts"
+    },
+    {
+      "name": "mcpResourcesAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/protocol/mcpResourcesAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/protocol/mcp-agent/src/mcp_resources_agent.ts"
+    },
+    {
+      "name": "runShellAgent",
+      "docs": "https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/system/runShellAgent.md",
+      "source": "https://github.com/receptron/graphai-agents/blob/main/system/run_shell_agent/src/run_shell_agent.ts"
+    }
+  ]
+}

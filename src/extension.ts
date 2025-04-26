@@ -6,6 +6,7 @@ import {
   useEvent,
 } from "reactive-vscode";
 import { window, workspace } from "vscode";
+import { useAgentProvider } from "./composables/useAgentProvider";
 import { parseGraphAIObject } from "./composables/useGraphAIParser";
 import { useMermaidWebview } from "./composables/useMermaidWebview";
 import { logger } from "./utils";
@@ -89,4 +90,12 @@ export = defineExtension(() => {
       "Unsupported file format. Only JSON, YAML, or TypeScript files are supported.",
     );
   });
+
+  const { hoverProvider, linkProvider, dispose } = useAgentProvider();
+
+  return {
+    hoverProvider,
+    linkProvider,
+    dispose,
+  };
 });
