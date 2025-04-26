@@ -19,7 +19,10 @@
     "vscode": "^1.89.0"
   },
   "activationEvents": [
-    "onCommand:graphai-visualizer.showGraph"
+    "onCommand:graphai-visualizer.showGraph",
+    "onLanguage:yaml",
+    "onLanguage:json",
+    "onLanguage:typescript"
   ],
   "contributes": {
     "commands": [
