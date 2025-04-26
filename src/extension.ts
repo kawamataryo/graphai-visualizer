@@ -9,12 +9,16 @@ import { window, workspace } from "vscode";
 import { useAgentProvider } from "./composables/useAgentProvider";
 import { parseGraphAIObject } from "./composables/useGraphAIParser";
 import { useMermaidWebview } from "./composables/useMermaidWebview";
+import { fetchAgentIndex } from "./lib/fetchAgentIndex";
 import { logger } from "./utils";
 
 // @ts-ignore
-export = defineExtension(() => {
+export = defineExtension(async () => {
   logger.info("Extension Activated");
   const onDidSaveTextDocument = useEvent(workspace.onDidSaveTextDocument);
+
+  // 起動時にagentIndexを取得
+  const agentIndex = await fetchAgentIndex();
 
   /**
    * Show graph from JSON, YAML file or TypeScript selection
@@ -91,7 +95,7 @@ export = defineExtension(() => {
     );
   });
 
-  const { hoverProvider, linkProvider, dispose } = useAgentProvider();
+  const { hoverProvider, linkProvider, dispose } = useAgentProvider(agentIndex);
 
   return {
     hoverProvider,
