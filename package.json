@@ -30,7 +30,18 @@
         "command": "graphai-visualizer.showGraph",
         "title": "GraphAI: Show Graph Visualization"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "GraphAI Visualizer",
+      "properties": {
+        "graphai-visualizer.agentClickAction": {
+          "type": "string",
+          "enum": ["docs", "source"],
+          "default": "docs",
+          "description": "Specifies the action when clicking an agent name. 'docs' opens documentation, 'source' opens source code."
+        }
+      }
+    }
   },
   "scripts": {
     "build": "tsup --env.NODE_ENV production --treeshake",

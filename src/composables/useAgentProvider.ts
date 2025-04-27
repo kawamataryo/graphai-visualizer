@@ -1,6 +1,9 @@
 import * as vscode from "vscode";
+import { config } from "../lib/config";
 
-// Types
+/**
+ * Types for agent information and provider
+ */
 interface AgentInfo {
   name: string;
   docs: string;
@@ -17,14 +20,22 @@ export interface AgentIndex {
   agents: AgentInfo[];
 }
 
-// Constants
+/**
+ * Constants for supported languages
+ */
 const SUPPORTED_LANGUAGES: vscode.DocumentFilter[] = [
   { scheme: "file", language: "yaml" },
   { scheme: "file", language: "json" },
   { scheme: "file", language: "typescript" },
 ];
 
-// Helper functions
+/**
+ * Helper functions for agent handling
+ */
+
+/**
+ * Creates a regex pattern for finding agent names in different file types
+ */
 export const getAgentRegex = (languageId: string, agentNames: string): RegExp => {
   const REGEX_PATTERNS: Record<string, string> = {
     json: `"agent"\\s*:\\s*"(${agentNames})"`,
@@ -36,11 +47,20 @@ export const getAgentRegex = (languageId: string, agentNames: string): RegExp =>
   return new RegExp(pattern, "g");
 };
 
+/**
+ * Retrieves agent information from the agent index
+ */
 export const getAgentInfo = (agentName: string, agentIndex: AgentIndex): AgentInfo | undefined => {
   return agentIndex.agents.find((agent) => agent.name === agentName);
 };
 
-// Provider implementations
+/**
+ * Provider implementations
+ */
+
+/**
+ * Creates a hover provider for agent information
+ */
 const createHoverProvider = (agentIndex: AgentIndex): vscode.HoverProvider => {
   const agentNames = agentIndex.agents.map((agent) => agent.name).join("|");
   return {
@@ -73,6 +93,10 @@ const createHoverProvider = (agentIndex: AgentIndex): vscode.HoverProvider => {
   };
 };
 
+/**
+ * Creates a link provider for agent navigation
+ * Uses configuration to determine click behavior (docs or source)
+ */
 const createLinkProvider = (agentIndex: AgentIndex): vscode.DocumentLinkProvider => {
   const agentNames = agentIndex.agents.map((agent) => agent.name).join("|");
   return {
@@ -102,9 +126,9 @@ const createLinkProvider = (agentIndex: AgentIndex): vscode.DocumentLinkProvider
 
           const link = new vscode.DocumentLink(
             range,
-            vscode.Uri.parse(agentInfo.docs),
+            vscode.Uri.parse(config.agentClickAction.value === "docs" ? agentInfo.docs : agentInfo.source),
           );
-          link.tooltip = `Click to open documentation for ${agentName}`;
+          link.tooltip = `Click to open ${config.agentClickAction.value === "docs" ? "documentation" : "source code"} for ${agentName}`;
           links.push(link);
 
           match = agentRegex.exec(line);
@@ -116,7 +140,9 @@ const createLinkProvider = (agentIndex: AgentIndex): vscode.DocumentLinkProvider
   };
 };
 
-// Main provider
+/**
+ * Main provider function that registers hover and link providers
+ */
 export const useAgentProvider = (agentIndex: AgentIndex): AgentProvider => {
   const hoverProvider = vscode.languages.registerHoverProvider(
     SUPPORTED_LANGUAGES,
