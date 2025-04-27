@@ -62,6 +62,33 @@ Checklist of testing points:
 - [ ] Test point 2
 ```
 
+### PR Description Formatting
+
+When creating PRs using the GitHub CLI (`gh`), proper formatting is crucial for readability:
+
+1. Use `$'...'` string format to properly handle line breaks:
+```bash
+gh pr create --title "Title" --body $'## Changes\n\n- First change\n- Second change'
+```
+
+2. Escape special characters:
+   - Single quotes: `\'`
+   - Double quotes: `\"`
+   - Line breaks: `\n`
+   - Multiple line breaks: `\n\n`
+
+3. Common patterns:
+   - Section breaks: `\n\n## Section\n\n`
+   - List items: `\n- Item`
+   - Nested content: `\n  Nested content`
+
+Example of well-formatted PR creation:
+```bash
+gh pr edit 10 --body $'## Changes\n\n- Change one\n- Change two\n\n## Details\n\nDetailed explanation\n\n## Testing\n\n- [ ] Test item'
+```
+
+This ensures the PR description appears properly formatted on GitHub with correct line breaks and Markdown rendering.
+
 Example PR: [extension.ts](mdc:src/extension.ts) changes are documented in PR with:
 ```markdown
 ## Changes
@@ -95,3 +122,4 @@ The extension now fetches the agent index from the GitHub repository...
    - Review the generated PR description
    - Check if all changes are properly documented
    - Verify that testing checklist is complete and relevant
+   - Ensure PR description is properly formatted with correct line breaks
