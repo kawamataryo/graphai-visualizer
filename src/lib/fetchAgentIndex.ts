@@ -7,12 +7,12 @@ import { logger } from "../utils";
 export const fetchAgentIndex = async (): Promise<AgentIndex> => {
   try {
     const response = await fetch(
-      "https://raw.githubusercontent.com/kawamataryo/graphai-visualizer/main/src/agentIndex.json"
+      "https://raw.githubusercontent.com/kawamataryo/graphai-visualizer/main/src/agentIndex.json",
     );
     if (!response.ok) {
       throw new Error("Failed to fetch agentIndex.json");
     }
-    return await response.json() as AgentIndex;
+    return (await response.json()) as AgentIndex;
   } catch (error) {
     logger.error("Error fetching agentIndex:", error);
     // Fallback to local agentIndex

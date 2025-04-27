@@ -36,7 +36,10 @@ const SUPPORTED_LANGUAGES: vscode.DocumentFilter[] = [
 /**
  * Creates a regex pattern for finding agent names in different file types
  */
-export const getAgentRegex = (languageId: string, agentNames: string): RegExp => {
+export const getAgentRegex = (
+  languageId: string,
+  agentNames: string,
+): RegExp => {
   const REGEX_PATTERNS: Record<string, string> = {
     json: `"agent"\\s*:\\s*"(${agentNames})"`,
     yaml: `agent:\\s*(?:["'](${agentNames})["']|(${agentNames}))(?:\\s|,|\\]|\\}|$)`,
@@ -50,7 +53,10 @@ export const getAgentRegex = (languageId: string, agentNames: string): RegExp =>
 /**
  * Retrieves agent information from the agent index
  */
-export const getAgentInfo = (agentName: string, agentIndex: AgentIndex): AgentInfo | undefined => {
+export const getAgentInfo = (
+  agentName: string,
+  agentIndex: AgentIndex,
+): AgentInfo | undefined => {
   return agentIndex.agents.find((agent) => agent.name === agentName);
 };
 
@@ -97,7 +103,9 @@ const createHoverProvider = (agentIndex: AgentIndex): vscode.HoverProvider => {
  * Creates a link provider for agent navigation
  * Uses configuration to determine click behavior (docs or source)
  */
-const createLinkProvider = (agentIndex: AgentIndex): vscode.DocumentLinkProvider => {
+const createLinkProvider = (
+  agentIndex: AgentIndex,
+): vscode.DocumentLinkProvider => {
   const agentNames = agentIndex.agents.map((agent) => agent.name).join("|");
   return {
     provideDocumentLinks(document: vscode.TextDocument) {
@@ -126,7 +134,11 @@ const createLinkProvider = (agentIndex: AgentIndex): vscode.DocumentLinkProvider
 
           const link = new vscode.DocumentLink(
             range,
-            vscode.Uri.parse(config.agentClickAction.value === "docs" ? agentInfo.docs : agentInfo.source),
+            vscode.Uri.parse(
+              config.agentClickAction.value === "docs"
+                ? agentInfo.docs
+                : agentInfo.source,
+            ),
           );
           link.tooltip = `Click to open ${config.agentClickAction.value === "docs" ? "documentation" : "source code"} for ${agentName}`;
           links.push(link);

@@ -1,6 +1,5 @@
 import type * as vscode from "vscode";
 import { parseObjectWithReferences } from "../lib/objectParser";
-import { logger } from "../utils";
 
 /**
  * Parses GraphAI object from cursor position
