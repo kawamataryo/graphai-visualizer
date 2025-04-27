@@ -1,5 +1,97 @@
 ---
-description:
+description: Reference for performing Git operations and executing gh commands.
 globs:
 alwaysApply: false
 ---
+# Git Workflow Guidelines
+
+## Commit Messages
+
+Commit messages should follow these rules:
+
+1. Start with a lowercase verb that describes the change:
+   - `add` - for new features/files
+   - `fix` - for bug fixes
+   - `update` - for updates to existing features
+   - `bump` - for version updates
+   - `use` - for changing usage of something
+
+2. Keep the first line concise and descriptive
+3. Use present tense ("add feature" not "added feature")
+4. Use lowercase throughout
+
+Examples from the project:
+```bash
+fix code style and formatting
+add .cursor to gitignore
+use remote agent info
+bump version
+```
+
+## Pull Requests
+
+### PR Title
+- Should be clear and descriptive
+- Start with a verb in present tense
+- Use Title Case for words
+- Example: "Add Configurable Agent Click Action"
+
+### PR Description Structure
+
+```markdown
+## Changes
+
+Brief bullet points of all changes made:
+- Change 1
+- Change 2
+
+## Details
+
+Detailed explanation of major changes, grouped by feature:
+
+### Feature Name
+Detailed description of the feature...
+
+### Another Feature
+Another detailed description...
+
+## Testing
+
+Checklist of testing points:
+- [ ] Test point 1
+- [ ] Test point 2
+```
+
+Example PR: [extension.ts](mdc:src/extension.ts) changes are documented in PR with:
+```markdown
+## Changes
+- Add configuration option for agent click action (docs/source)
+- Add remote agent index fetching with local fallback
+- Add English documentation and comments
+- Fix code style and formatting
+
+## Details
+### Configuration Option
+This PR adds a new configuration option that allows users to customize...
+
+### Remote Agent Index
+The extension now fetches the agent index from the GitHub repository...
+
+## Testing
+- [ ] Verify that clicking on agent names opens documentation by default
+- [ ] Verify that changing the setting to 'source' makes clicks open source code
+...
+```
+
+## Code Review Process
+
+1. Before creating PR:
+   - Run `npm run check` to ensure code style
+   - Review all changes with `git diff`
+   - Make sure all tests pass
+   - Update documentation if needed
+
+2. After creating PR:
+   - Review the generated PR description
+   - Check if all changes are properly documented
+   - Verify that testing checklist is complete and relevant

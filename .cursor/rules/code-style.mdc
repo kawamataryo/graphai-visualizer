@@ -1,5 +1,51 @@
 ---
 description:
-globs:
+globs: *.ts
 alwaysApply: false
 ---
+# Code Style Guidelines
+
+## Code Style Checking
+
+After making any code changes, you MUST run the code style check using:
+
+```bash
+npm run check
+```
+
+This command uses [Biome](https://biomejs.dev/) to ensure consistent code style across the project. The configuration is defined in [package.json](mdc:package.json).
+
+### Why is this important?
+
+1. Maintains consistent code style across the project
+2. Catches potential issues early
+3. Ensures all code follows the same formatting rules
+4. Makes code reviews easier
+5. Prevents style-related merge conflicts
+
+### When to run check?
+
+- After making any code changes
+- Before committing changes
+- Before creating a pull request
+- After resolving merge conflicts
+
+### What does it check?
+
+The check command enforces:
+- Consistent quote usage (double quotes)
+- Proper indentation
+- Function parameter formatting
+- Import/export statement formatting
+- And other Biome rules
+
+### Example
+
+If you see style issues after running the check, they will look like this:
+
+```
+style/useDoubleQuotes  Use double quotes instead of single quotes
+style/useSpaces       Use spaces instead of tabs
+```
+
+Fix these issues before proceeding with any other changes.
