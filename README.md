@@ -1,6 +1,6 @@
 # graphai-visualizer
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/receptron.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=receptron.graphai-visualizer) [![Installs](https://img.shields.io/visual-studio-marketplace/i/receptron.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=receptron.graphai-visualizer) [![Reactive VSCode](https://img.shields.io/badge/Reactive-VSCode-%23007ACC?style=flat&labelColor=%23229863)](https://kermanx.github.io/reactive-vscode/)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/kawamataryo.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=kawamataryo.graphai-visualizer) [![Installs](https://img.shields.io/visual-studio-marketplace/i/kawamataryo.graphai-visualizer)](https://marketplace.visualstudio.com/items?itemName=kawamataryo.graphai-visualizer) [![Reactive VSCode](https://img.shields.io/badge/Reactive-VSCode-%23007ACC?style=flat&labelColor=%23229863)](https://kermanx.github.io/reactive-vscode/)
 
 GraphAI Visualizer is a VS Code extension for visualizing JSON and YAML graphs defined with [GraphAI](https://github.com/receptron/graphai), as well as GraphAI objects in TypeScript files. Built using [Reactive VS Code](https://kermanx.github.io/reactive-vscode/).
 
